@@ -1,0 +1,250 @@
+CREATE TABLE user (
+  user_id INT NOT NULL AUTO_INCREMENT,
+  full_name VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  PRIMARY KEY (user_id)
+);
+
+CREATE TABLE restaurant (
+  res_id INT NOT NULL AUTO_INCREMENT,
+  res_name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (res_id)
+);
+
+CREATE TABLE food_type (
+  type_id INT NOT NULL AUTO_INCREMENT,
+  type_name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (type_id)
+);
+
+#food
+
+CREATE TABLE food (
+  food_id INT NOT NULL AUTO_INCREMENT,
+  food_name VARCHAR(255) NOT NULL,
+  image VARCHAR(255),
+  price FLOAT NOT NULL,
+  type_id INT NOT NULL,
+  PRIMARY KEY (food_id),
+  FOREIGN KEY (type_id) REFERENCES food_type (type_id)
+);
+
+CREATE TABLE rate_res (
+  user_id INT NOT NULL,
+  res_id INT NOT NULL,
+  amount INT NOT NULL,
+  date_rate DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user (user_id),
+  FOREIGN KEY (res_id) REFERENCES restaurant (res_id)
+)
+
+CREATE TABLE like_res (
+  user_id INT NOT NULL,
+  res_id INT NOT NULL,
+  date_like DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user (user_id),
+  FOREIGN KEY (res_id) REFERENCES restaurant (res_id)
+);
+
+CREATE TABLE orders (
+  user_id INT NOT NULL,
+  food_id INT NOT NULL,
+  amount INT NOT NULL,
+  code VARCHAR(255),
+  arr_sub_id VARCHAR(255),
+  FOREIGN KEY (user_id) REFERENCES user (user_id),
+  FOREIGN KEY (food_id) REFERENCES food (food_id)
+);
+
+CREATE TABLE sub_food (
+  sub_id INT NOT NULL AUTO_INCREMENT,
+  sub_name VARCHAR(255) NOT NULL,
+  sub_price FLOAT NOT NULL,
+  descs VARCHAR(255),
+  PRIMARY KEY (sub_id)
+);
+
+# thêm data
+INSERT INTO user (full_name, email, password)
+VALUES
+('Nguyễn Văn A', 'nguyenvana@example.com', '123456'),
+('Trần Thị B', 'tranthibu@example.com', '789012'),
+('Lê Quang C', 'lequangc@example.com', '345678'),
+('Đỗ Thị D', 'dothidu@example.com', '901234'),
+('Hoàng Văn E', 'hoangvanue@example.com', '567890'),
+('Phan Thị F', 'phanthf@example.com', '456789'),
+('Nguyễn Thị G', 'nguyenthigu@example.com', '678901'),
+('Trần Văn H', 'tranvanh@example.com', '890123'),
+('Lê Thị I', 'lethii@example.com', '012345'),
+('Đỗ Văn J', 'dovanj@example.com', '234567'),
+('Hoàng Thị K', 'hoangthikh@example.com', '345678'),
+('Phan Thị L', 'phanthl@example.com', '456789'),
+('Nguyễn Thị M', 'nguyenthimm@example.com', '567890'),
+('Trần Văn N', 'tranvann@example.com', '678901'),
+('Lê Thị O', 'lethioo@example.com', '789012'),
+('Đỗ Văn P', 'dovanp@example.com', '890123'),
+('Hoàng Thị Q', 'hoangthiq@example.com', '901234');
+
+
+INSERT INTO restaurant (res_name)
+VALUES
+('Nhà hàng Bún chả Hương Liên'),
+('Nhà hàng Phở 24'),
+('Nhà hàng Cơm tấm Hiền'),
+('Nhà hàng Bánh mì Bảy Hiền'),
+('Nhà hàng Cao lầu Hội An'),
+('Nhà hàng Bánh tráng cuốn thịt heo'),
+('Nhà hàng Lẩu gà lá é'),
+('Nhà hàng Hải sản Biển Đông'),
+('Nhà hàng Buffet lẩu nướng');
+
+INSERT INTO food_type (type_name)
+VALUES
+('Ẩm thực Việt Nam'),
+('Ẩm thực Trung Quốc'),
+('Ẩm thực Nhật Bản'),
+('Ẩm thực Hàn Quốc'),
+('Ẩm thực Thái Lan'),
+('Ẩm thực Ý'),
+('Ẩm thực Pháp'),
+('Ẩm thực Mexico'),
+('Ẩm thực Ấn Độ');
+
+
+
+
+INSERT INTO food (food_name, image, price, type_id)
+VALUES
+('Bún chả Hương Liên', 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/Bun_cha_Huong_Lien.jpg/1200px-Bun_cha_Huong_Lien.jpg', 35.000, 1),
+('Phở 24', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Pho_24.jpg/1200px-Pho_24.jpg', 50.000, 1),
+('Cơm tấm Hiền', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Cơm_tấm_Hiền.jpg/1200px-Cơm_tấm_Hiền.jpg', 40.000, 1),
+('Bánh mì Bảy Hiền', 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Bánh_mì_Bảy_Hiền.jpg/1200px-Bánh_mì_Bảy_Hiền.jpg', 25.000, 1),
+('Cao lầu Hội An', 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Cao_lầu_Hội_An.jpg/1200px-Cao_lầu_Hội_An.jpg', 50.000, 1),
+('Bánh tráng cuốn thịt heo', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Bánh_tráng_cuốn_thịt_heo.jpg/1200px-Bánh_tráng_cuốn_thịt_heo.jpg', 40.000, 1),
+('Lẩu gà lá é', 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Lẩu_gà_lá_é.jpg/1200px-Lẩu_gà_lá_é.jpg', 250.000, 1),
+('Hải sản Biển Đông', 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b7/Hải_sản_Biển_Đông.jpg/1200px-Hải_sản_Biển_Đông.jpg', 500.000, 2),
+('Buffet lẩu nướng', 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Buffet_lẩu_nướng.jpg/1200px-Buffet_lẩu_nướng.jpg', 200.000, 2);
+
+
+INSERT INTO sub_food (sub_name, sub_price, descs)
+VALUES
+('Nước chấm chua ngọt', 5.000, 'Nước chấm chua ngọt truyền thống của Việt Nam, được làm từ nước mắm, đường, chanh, ớt'),
+('Nước tương', 5.000, 'Nước tương là một loại gia vị phổ biến trong ẩm thực Việt Nam, được làm từ đậu nành, muối, và men'),
+('Tương ớt', 5.000, 'Tương ớt là một loại gia vị cay nồng, được làm từ ớt, cà chua, và các loại gia vị khác'),
+('Gỏi cuốn', 20.000, 'Gỏi cuốn là một món ăn phổ biến của Việt Nam, được làm từ bánh tráng, rau củ, và thịt'),
+('Bánh đa nem', 15.000, 'Bánh đa nem là một loại bánh đa được làm từ bột gạo, được sử dụng để cuốn nem'),
+('Chả giò', 30.000, 'Chả giò là một món ăn phổ biến của Việt Nam, được làm từ thịt, tôm, và các loại rau củ'),
+('Súp cua', 35.000, 'Súp cua là một món ăn phổ biến của Việt Nam, được làm từ thịt cua, trứng gà, và các loại rau củ'),
+('Súp gà', 40.000, 'Súp gà là một món ăn phổ biến của Việt Nam, được làm từ thịt gà, rau củ, và các loại gia vị'),
+('Nước ép trái cây', 30.000, 'Nước ép trái cây là một loại thức uống phổ biến, được làm từ trái cây tươi'),
+('Cà phê', 40.000, 'Cà phê là một loại thức uống phổ biến, được làm từ hạt cà phê');
+
+
+INSERT INTO rate_res (user_id, res_id, amount, date_rate)
+VALUES
+(1, 1, 5, '2023-07-20 12:00:00'),
+(2, 2, 4, '2023-07-21 13:00:00'),
+(3, 3, 3, '2023-07-22 14:00:00'),
+(4, 4, 2, '2023-07-23 15:00:00'),
+(5, 5, 1, '2023-07-24 16:00:00'),
+(6, 6, 5, '2023-07-25 12:00:00'),
+(7, 7, 4, '2023-07-26 13:00:00'),
+(8, 8, 3, '2023-07-27 14:00:00'),
+(9, 9, 2, '2023-07-28 15:00:00'),
+(10, 1, 5, '2023-07-20 12:00:00'),
+(11, 1, 5, '2023-07-20 12:00:00'),
+(12, 1, 5, '2023-07-20 12:00:00'),
+(13, 2, 4, '2023-07-20 12:00:00'),
+(14, 2, 3, '2023-07-20 12:00:00'),
+(15, 2, 2, '2023-07-20 12:00:00'),
+(16, 2, 1, '2023-07-20 12:00:00');
+
+
+
+INSERT INTO orders (user_id, food_id,amount, code, arr_sub_id)
+VALUES
+(1, 2, 1, 'OD12345', '1,2'),
+(2, 5, 1, 'OD67890', '3'),
+(3, 8, 2, 'OD09876', NULL),
+(4, 1, 4, 'OD54321', '4,5,6'),
+(5, 4, 5, 'OD11111', NULL),
+(6, 7, 2, 'OD22222', NULL),
+(7, 1, 1, 'OD33333', '7,8'),
+(8, 3, 4, 'OD44444', '9,8'),
+(9, 6, 5, 'OD55555', NULL),
+(10, 9, 6, 'OD66666', '1,2'),
+(11, 1, 1, 'OD77777', '3,4'),
+(12, 1, 2, 'OD88888', '5,6'),
+(13, 2, 3, 'OD99999', '7,8'),
+(14, 3, 4, 'ODAAA00', '9,2'),
+(15, 1, 5, 'ODABB01', NULL),
+(16, 5, 6, 'ODACC02', '2,2');
+
+
+
+INSERT INTO like_res (user_id, res_id, date_like)
+VALUES
+(1, 1, '2023-08-01 12:00:00'),
+(2, 2, '2023-08-02 13:00:00'),
+(3, 3, '2023-08-03 14:00:00'),
+(4, 4, '2023-08-04 15:00:00'),
+(5, 5, '2023-08-05 16:00:00'),
+(6, 6, '2023-08-05 16:00:00'),
+(7, 7, '2023-08-05 16:00:00'),
+(8, 9, '2023-08-05 16:00:00'),
+(10,1 , '2023-08-05 16:00:00'),
+(11, 2, '2023-08-05 16:00:00'),
+(12, 3, '2023-08-05 16:00:00'),
+(13, 4, '2023-08-05 16:00:00'),
+(14, 1, '2023-08-05 16:00:00'),
+(1, 2, '2023-08-05 16:00:00'),
+(12, 2, '2023-08-05 16:00:00'),
+(13, 2, '2023-08-05 16:00:00'),
+(14, 1, '2023-08-05 16:00:00'),
+(15, 2, '2023-08-05 16:00:00'),
+(12, 1, '2023-08-05 16:00:00'),
+(16, 1, '2023-08-05 16:00:00');
+
+
+
+# 1. tìm 5 người like nhiều nhất
+
+SELECT user.user_id, full_name, COUNT(*) AS num_likes
+FROM like_res
+JOIN user ON user.user_id = like_res.user_id
+GROUP BY user_id
+ORDER BY num_likes DESC
+LIMIT 5;
+
+#2. tìm 2 nhà hàng được like nhiều nhất
+
+SELECT lr.res_id, r.res_name, COUNT(*) AS num_likes
+FROM like_res lr
+JOIN restaurant r ON lr.res_id = r.res_id
+GROUP BY lr.res_id
+ORDER BY num_likes DESC
+LIMIT 2;
+
+#3. tìm người đặt hàng nhiều nhất
+SELECT user.user_id, full_name, COUNT(*) AS num_orders
+FROM orders
+JOIN user ON user.user_id = orders.user_id
+GROUP BY user_id
+ORDER BY num_orders DESC
+LIMIT 1;
+
+INSERT INTO user (full_name, email, password)
+VALUES
+('no like1', 'newcustomer1@example.com', 'password'),
+('no like 2', 'newcustomer2@example.com', 'password');
+
+# 4 tìm người không hoạt động
+
+SELECT user.user_id, full_name, email
+FROM user
+WHERE user.user_id NOT IN (
+    SELECT user_id FROM like_res
+) AND user.user_id NOT IN (
+    SELECT user_id FROM orders
+);
